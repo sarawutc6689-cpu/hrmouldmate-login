@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <style>
+    .inputtext {
+      width: 100%;
+      margin: 5px 0;
+      padding: 10px;
+      border: 2px solid #000;
+      border-radius: 20px;
+      box-sizing: border-box;
+    }
+    .button {
+      width: 100%;
+      margin: 5px 0;
+      padding: 10px;
+      background-color: #F72307;
+      border: 2px solid #000;
+      border-radius: 20px;
+      color: white;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    #msg {
+      color: red;
+      font-weight: bold;
+      margin: 10px 0;
+      background: url("https://sarawutc6689-cpu.github.io/hrmouldmate-login/BGLogin.jpg") no-repeat center center fixed; /* ✅ URL รูป */
+    background-size: cover; /* ✅ ปรับเต็มจอ */
+    }
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      width: 300px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 style="color:#F50602;">เฉพาะพนักงานเท่านั้น</h2>
+    <form name="myform" onsubmit="return false;">
+      <input type="text" name="uname" class="inputtext" placeholder="รหัสพนักงาน"><br>
+      <input type="password" name="pass" class="inputtext" placeholder="วันที่เริ่มงาน"><br>
+      <div id="msg"></div>
+      <input type="button" class="button" value="Login" onclick="login()">
+    </form>
+  </div>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz11yRb-zFzAZ--YcYaHydHfCow6xEZ2JUb_FnLc34TftadbUw1ZyTDAc98zeOigRqEew/exec";
+    const DASHBOARD_URL = "https://sarawutc6689-cpu.github.io/hrmouldmate-login/Index.html";
+
+    function login() {
+      var user = document.forms["myform"]["uname"].value;
+      var pass = document.forms["myform"]["pass"].value;
+
+      if(user === "" || pass === "") {
+        document.getElementById("msg").innerHTML = "กรุณากรอก username และ password";
+        return;
+      }
+
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        body: new URLSearchParams({
+          "uname": user,
+          "pass": pass,
+          "action": "login"
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log("Login API response:", data);
+
+        if(data.status === "success" && data.userStatus === "Online") {
+          localStorage.setItem("username", user);
+          console.log("Saved username to localStorage:", user);
+          window.open(DASHBOARD_URL, "_self");
+        } else {
+          document.getElementById("msg").innerHTML = "ชื่อผู้ใช้ หรือรหัสผ่านไม่ถูกต้อง";
+        }
+      })
+      .catch(err => {
+        document.getElementById("msg").innerHTML = "เกิดข้อผิดพลาด กรุณาลองใหม่";
+        console.error("Login API error:", err);
+      });
+    }
+  </script>
+</body>
+</html>
