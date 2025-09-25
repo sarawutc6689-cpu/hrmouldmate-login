@@ -82,6 +82,7 @@
           localStorage.setItem("username", user);
           window.open(DASHBOARD_URL, "_self");
         } else {
+          document.getElementById("msg").style.color = "red";
           document.getElementById("msg").innerHTML = "ชื่อผู้ใช้ หรือรหัสผ่านไม่ถูกต้อง";
         }
       })
