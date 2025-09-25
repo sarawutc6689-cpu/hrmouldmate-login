@@ -69,7 +69,7 @@
         return;
       }
       document.getElementById("msg").style.color = "blue";
-      document.getElementById("msg").innerHTML = + data.fullname + "กำลังนำท่านเข้าสู่ระบบ...";
+      document.getElementById("msg").innerHTML = + data.name + "กำลังนำท่านเข้าสู่ระบบ...";
       
       fetch(SCRIPT_URL, {
         method: "POST",
@@ -100,5 +100,6 @@
   </script>
 </body>
 </html>
+
 
 
