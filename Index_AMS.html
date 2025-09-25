@@ -57,7 +57,7 @@
   </div>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz11yRb-zFzAZ--YcYaHydHfCow6xEZ2JUb_FnLc34TftadbUw1ZyTDAc98zeOigRqEew/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwVBxuODeMoEYagBDJ9yW6lKz8OhEpmAl5FFTiP5092AZc4RIsuiHZlloRtjXbncKrxQg/exec";
     const DASHBOARD_URL = "https://sites.google.com/view/amsmouldmate";
 
     function login() {
@@ -81,12 +81,12 @@
       })
       .then(res => res.json())
       .then(data => {
-        console.log("Login API response:", data);
-
         if(data.status === "success" && data.userStatus === "Online") {
-          localStorage.setItem("username", user);
-          console.log("Saved username to localStorage:", user);
-          window.open(DASHBOARD_URL, "_self");
+          localStorage.setItem("empCode", user);        // เก็บรหัสพนักงาน
+          localStorage.setItem("empName", data.empName); // เก็บชื่อจริง
+
+          document.getElementById("msg").style.color = "green";
+          document.getElementById("msg").innerHTML = "ยินดีต้อนรับ " + data.empName;
         } else {
           document.getElementById("msg").style.color = "red";
           document.getElementById("msg").innerHTML = "ชื่อผู้ใช้ หรือรหัสผ่านไม่ถูกต้อง";
@@ -100,6 +100,7 @@
   </script>
 </body>
 </html>
+
 
 
 
