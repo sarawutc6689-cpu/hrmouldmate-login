@@ -20,23 +20,13 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       background: white;
     }
-    .button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #F72307;
-      border: none;
-      border-radius: 10px;
-      color: white;
-      cursor: pointer;
-      font-size: 16px;
-    }
     #msg {
       margin-top: 10px;
       color: green;
     }
   </style>
 </head>
-<body style="display:none;" onload="checkAuth()">
+<body onload="checkAuth()">
   <div class="container">
     <h2>กำลังตรวจสอบสิทธิ์...</h2>
     <p>กรุณารอสักครู่ ระบบกำลังนำท่านไปยังหน้าหลัก</p>
@@ -48,34 +38,28 @@
     const LOGIN_URL = "Index_AMS.html"; 
     const TARGET_URL = "https://sites.google.com/view/amsmouldmate"; // ✅ URL จริงที่ต้องการไป
 
-   function checkAuth() {
-  const token = localStorage.getItem("authToken");
-  const expireTime = localStorage.getItem("expireTime");
+    function checkAuth() {
+      const token = localStorage.getItem("authToken");
+      const expireTime = localStorage.getItem("expireTime");
 
-  if (!token || !expireTime || new Date().getTime() > parseInt(expireTime, 10)) {
-    redirectToLogin();
-    return;
-  }
-
-  fetch(SCRIPT_URL + "?action=verify&token=" + token)
-    .then(res => res.json())
-    .then(data => {
-      if (data.valid) {
-        // ✅ แทนที่จะโชว์ Dashboard → redirect ไปยัง Target URL
-        window.location.replace(TARGET_URL);
-      } else {
+      if (!token || !expireTime || new Date().getTime() > parseInt(expireTime, 10)) {
         redirectToLogin();
+        return;
       }
-    })
-    .catch(() => redirectToLogin());
-}
 
+      fetch(SCRIPT_URL + "?action=verify&token=" + token)
+        .then(res => res.json())
+        .then(data => {
+          if (data.valid) {
+            // ✅ redirect ไปยัง Target URL โดยตรง
+            window.location.replace(TARGET_URL);
+          } else {
+            redirectToLogin();
+          }
+        })
+        .catch(() => redirectToLogin());
+    }
 
     function redirectToLogin() {
       localStorage.clear();
-      window.location.replace(LOGIN_URL);
-    }
-  </script>
-</body>
-</html>
-
+      window.location.re
