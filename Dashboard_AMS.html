@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard</title>
+  <title>Dashboard Redirect</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -38,97 +38,40 @@
 </head>
 <body style="display:none;" onload="checkAuth()">
   <div class="container">
-    <h2>⚠ท่านกำลังออกจากระบบ</h2>
-    <p>กด "ยืนยัน" เพื่อกำลังนำท่านเข้าสู่หน้าหลัก</p>
-    <button class="button" onclick="logout()">ยืนยันออกระบบ</button>
+    <h2>กำลังตรวจสอบสิทธิ์...</h2>
+    <p>กรุณารอสักครู่ ระบบกำลังนำท่านไปยังหน้าหลัก</p>
     <div id="msg"></div>
   </div>
 
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz11yRb-zFzAZ--YcYaHydHfCow6xEZ2JUb_FnLc34TftadbUw1ZyTDAc98zeOigRqEew/exec";
-    const LOGIN_URL = "https://sarawutc6689-cpu.github.io/hrmouldmate-login/Index_AMS.html"; // ✅ Redirect back to local Login
-    const TARGET_URL = "https://sites.google.com/view/amsmouldmate";
-    
-  function checkAuth() {
-  const token = localStorage.getItem("authToken");
-  const expireTime = localStorage.getItem("expireTime");
+    const LOGIN_URL = "Index_AMS.html"; 
+    const TARGET_URL = "https://sites.google.com/view/amsmouldmate"; // ✅ URL จริงที่ต้องการไป
 
-  if (!token || !expireTime || new Date().getTime() > parseInt(expireTime, 10)) {
-    redirectToLogin();
-    return;
-  }
+    function checkAuth() {
+      const token = localStorage.getItem("authToken");
+      const expireTime = localStorage.getItem("expireTime");
 
-  fetch(SCRIPT_URL + "?action=verify&token=" + token)
-    .then(res => res.json())
-    .then(data => {
-      if (data.valid) {
-        window.location.replace(TARGET_URL);// ✅ show content only if valid
-      } else {
+      if (!token || !expireTime || new Date().getTime() > parseInt(expireTime, 10)) {
         redirectToLogin();
-      }
-    })
-    .catch(() => redirectToLogin());
-}
-
-    const token = localStorage.getItem("authToken");
-    const expireTime = localStorage.getItem("expireTime");
-
-    if (!token || !expireTime || new Date().getTime() > parseInt(expireTime, 10)) {
-      redirectToLogin();
-      return;
-    }
-
-    fetch(SCRIPT_URL + "?action=verify&token=" + token)
-      .then(res => res.json())
-      .then(data => {
-        if (data.valid) {
-          document.body.style.display = "block"; // ✅ show content only if valid
-        } else {
-          redirectToLogin();
-        }
-      })
-      .catch(() => redirectToLogin());
-  }
-
-  function redirectToLogin() {
-  localStorage.clear();
-  window.location.replace(LOGIN_URL); // ✅ force back to login
-}
-    localStorage.clear();
-    window.location.href = LOGIN_URL;
-  }
-
-  function logout() {
-      var user = localStorage.getItem("username");
-      console.log("Logout clicked, username from localStorage:", user);
-
-      if (!user) {
-        document.getElementById("msg").innerHTML = "⚠ ไม่พบผู้ใช้งาน";
         return;
       }
 
-      fetch(SCRIPT_URL, {
-        method: "POST",
-        body: new URLSearchParams({
-          "uname": user,
-          "action": "logout"
+      fetch(SCRIPT_URL + "?action=verify&token=" + token)
+        .then(res => res.json())
+        .then(data => {
+          if (data.valid) {
+            window.location.replace(TARGET_URL); // ✅ redirect ไปยัง URL จริงอัตโนมัติ
+          } else {
+            redirectToLogin();
+          }
         })
-      })
-      .then(res => res.json())
-      .then(data => {
-        console.log("Logout API response:", data);
+        .catch(() => redirectToLogin());
+    }
 
-        if (data.status === "success") {
-          localStorage.removeItem("username"); 
-          window.open(LOGIN_URL, "_self");
-        } else {
-          document.getElementById("msg").innerHTML = "⚠ออกจากระบบไม่สำเร็จ";
-        }
-      })
-      .catch(err => {
-        document.getElementById("msg").innerHTML = "⚠เกิดข้อผิดพลาด กรุณาลองใหม่";
-        console.error("Logout API error:", err);
-      });
+    function redirectToLogin() {
+      localStorage.clear();
+      window.location.replace(LOGIN_URL);
     }
   </script>
 </body>
