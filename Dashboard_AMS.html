@@ -1,65 +1,41 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Dashboard Redirect</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f9f9f9;
-    }
-    .container {
-      text-align: center;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      background: white;
-    }
-    #msg {
-      margin-top: 10px;
-      color: green;
-    }
-  </style>
-</head>
-<body onload="checkAuth()">
-  <div class="container">
-    <h2>กำลังตรวจสอบสิทธิ์...</h2>
-    <p>กรุณารอสักครู่ ระบบกำลังนำท่านไปยังหน้าหลัก</p>
-    <div id="msg"></div>
-  </div>
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz11yRb-zFzAZ--YcYaHydHfCow6xEZ2JUb_FnLc34TftadbUw1ZyTDAc98zeOigRqEew/exec";
+  const LOGIN_URL = "Index_AMS.html"; 
+  const TARGET_URL = "https://sites.google.com/view/amsmouldmate"; 
 
-  <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz11yRb-zFzAZ--YcYaHydHfCow6xEZ2JUb_FnLc34TftadbUw1ZyTDAc98zeOigRqEew/exec";
-    const LOGIN_URL = "Index_AMS.html"; 
-    const TARGET_URL = "https://sites.google.com/view/amsmouldmate"; // ✅ URL จริงที่ต้องการไป
+  function checkAuth() {
+    const token = localStorage.getItem("authToken");
+    const expireTime = localStorage.getItem("expireTime");
 
-    function checkAuth() {
-      const token = localStorage.getItem("authToken");
-      const expireTime = localStorage.getItem("expireTime");
+    console.log("🔑 token =", token);
+    console.log("⏳ expireTime =", expireTime);
 
-      if (!token || !expireTime || new Date().getTime() > parseInt(expireTime, 10)) {
+    if (!token || !expireTime || new Date().getTime() > parseInt(expireTime, 10)) {
+      console.warn("⚠ Token ไม่เจอหรือหมดอายุ");
+      redirectToLogin();
+      return;
+    }
+
+    fetch(SCRIPT_URL + "?action=verify&token=" + token)
+      .then(res => res.json())
+      .then(data => {
+        console.log("✅ verify response =", data);
+        if (data.valid) {
+          console.log("🎯 redirect ไป Target URL:", TARGET_URL);
+          window.location.replace(TARGET_URL);
+        } else {
+          console.warn("❌ token ไม่ valid");
+          redirectToLogin();
+        }
+      })
+      .catch(err => {
+        console.error("🚨 fetch error =", err);
         redirectToLogin();
-        return;
-      }
+      });
+  }
 
-      fetch(SCRIPT_URL + "?action=verify&token=" + token)
-        .then(res => res.json())
-        .then(data => {
-          if (data.valid) {
-            // ✅ redirect ไปยัง Target URL โดยตรง
-            window.location.replace(TARGET_URL);
-          } else {
-            redirectToLogin();
-          }
-        })
-        .catch(() => redirectToLogin());
-    }
-
-    function redirectToLogin() {
-      localStorage.clear();
-      window.location.re
+  function redirectToLogin() {
+    localStorage.clear();
+    window.location.replace(LOGIN_URL);
+  }
+</script>
