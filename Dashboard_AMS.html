@@ -47,7 +47,7 @@
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz11yRb-zFzAZ--YcYaHydHfCow6xEZ2JUb_FnLc34TftadbUw1ZyTDAc98zeOigRqEew/exec";
     const LOGIN_URL = "https://sarawutc6689-cpu.github.io/hrmouldmate-login/Index_AMS.html"; // ✅ Redirect back to local Login
-
+    const TARGET_URL = "https://sites.google.com/view/amsmouldmate";
     
   function checkAuth() {
   const token = localStorage.getItem("authToken");
@@ -62,7 +62,7 @@
     .then(res => res.json())
     .then(data => {
       if (data.valid) {
-        document.body.style.display = "block"; // ✅ show content only if valid
+        window.location.replace(TARGET_URL);// ✅ show content only if valid
       } else {
         redirectToLogin();
       }
