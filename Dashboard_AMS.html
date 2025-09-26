@@ -48,26 +48,28 @@
     const LOGIN_URL = "Index_AMS.html"; 
     const TARGET_URL = "https://sites.google.com/view/amsmouldmate"; // ✅ URL จริงที่ต้องการไป
 
-    function checkAuth() {
-      const token = localStorage.getItem("authToken");
-      const expireTime = localStorage.getItem("expireTime");
+   function checkAuth() {
+  const token = localStorage.getItem("authToken");
+  const expireTime = localStorage.getItem("expireTime");
 
-      if (!token || !expireTime || new Date().getTime() > parseInt(expireTime, 10)) {
+  if (!token || !expireTime || new Date().getTime() > parseInt(expireTime, 10)) {
+    redirectToLogin();
+    return;
+  }
+
+  fetch(SCRIPT_URL + "?action=verify&token=" + token)
+    .then(res => res.json())
+    .then(data => {
+      if (data.valid) {
+        // ✅ แทนที่จะโชว์ Dashboard → redirect ไปยัง Target URL
+        window.location.replace(TARGET_URL);
+      } else {
         redirectToLogin();
-        return;
       }
+    })
+    .catch(() => redirectToLogin());
+}
 
-      fetch(SCRIPT_URL + "?action=verify&token=" + token)
-        .then(res => res.json())
-        .then(data => {
-          if (data.valid) {
-            window.location.replace(TARGET_URL); // ✅ redirect ไปยัง URL จริงอัตโนมัติ
-          } else {
-            redirectToLogin();
-          }
-        })
-        .catch(() => redirectToLogin());
-    }
 
     function redirectToLogin() {
       localStorage.clear();
@@ -76,3 +78,4 @@
   </script>
 </body>
 </html>
+
