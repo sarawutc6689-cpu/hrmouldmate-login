@@ -58,7 +58,7 @@
 
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz11yRb-zFzAZ--YcYaHydHfCow6xEZ2JUb_FnLc34TftadbUw1ZyTDAc98zeOigRqEew/exec";
-    const DASHBOARD_URL = "https://sarawutc6689-cpu.github.io/hrmouldmate-login/Dashboard_AMS.html"; // ✅ Redirect to local Dashboard
+    const DASHBOARD_URL = "Dashboard_AMS.html"; // ✅ ใช้ Dashboard ของเราแทน Google Sites
 
     function login() {
       var user = document.forms["myform"]["uname"].value;
@@ -88,7 +88,7 @@
           localStorage.setItem("authToken", data.token);
           localStorage.setItem("expireTime", data.expireTime);
           console.log("Saved username to localStorage:", user);
-          window.open(DASHBOARD_URL, "_self");
+          window.open(DASHBOARD_URL, "_self"); // ✅ ไป Dashboard เพื่อเช็ค token
         } else {
           document.getElementById("msg").innerHTML = "ชื่อผู้ใช้ หรือรหัสผ่านไม่ถูกต้อง";
         }
