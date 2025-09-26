@@ -46,7 +46,7 @@
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz11yRb-zFzAZ--YcYaHydHfCow6xEZ2JUb_FnLc34TftadbUw1ZyTDAc98zeOigRqEew/exec";
     const LOGIN_URL = "Index_AMS.html"; 
-    const TARGET_URL = "https://sites.google.com/view/amsmouldmate"; // ✅ URL จริงที่ต้องการไป
+    const TARGET_URL = "https://sites.google.com/view/amsmouldmate";
 
     function checkAuth() {
       const token = localStorage.getItem("authToken");
@@ -61,7 +61,7 @@
         .then(res => res.json())
         .then(data => {
           if (data.valid) {
-            window.location.replace(TARGET_URL); // ✅ redirect ไปยัง URL จริงอัตโนมัติ
+            window.location.replace(TARGET_URL);
           } else {
             redirectToLogin();
           }
