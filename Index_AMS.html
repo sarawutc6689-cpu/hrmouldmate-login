@@ -77,9 +77,18 @@
           "action": "login"
         })
       })
-      .then(res => res.json())
-      .then(data => {
-        console.log("Login API response:", data);
+      .then(res => res.text())
+     .then(txt => {
+        console.log("Raw response:", txt);
+        let data;
+        try {
+          data = JSON.parse(txt);
+        } catch(e) {
+          console.error("ไม่ใช่ JSON ที่ถูกต้อง:", e);
+         return;
+       }
+         console.log("Login API response:", data);
+
 
         if(data.status === "success" && data.userStatus === "Online") {
           localStorage.setItem("username", user);
@@ -98,3 +107,4 @@
   </script>
 </body>
 </html>
+
