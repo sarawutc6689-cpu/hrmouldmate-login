@@ -490,7 +490,7 @@
         const month = parseInt(pass.substring(2, 4));
         const year = parseInt(pass.substring(4, 8));
         
-        if(day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > 2100) {
+        if(day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > 2900) {
           msgElement.className = "message error";
           msgElement.innerHTML = "<i class='fas fa-calendar-times'></i> รูปแบบวันที่เริ่มงานไม่ถูกต้อง (DDMMYYYY)";
           msgElement.style.display = "block";
