@@ -1,74 +1,517 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ระบบล็อกอินพนักงาน | TOKAI</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    .inputtext {
-      width: 100%;
-      margin: 5px 0;
-      padding: 10px;
-      border: 2px solid #000;
-      border-radius: 20px;
+    * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    .button {
-      width: 100%;
-      margin: 5px 0;
-      padding: 10px;
-      background-color: #F72307;
-      border: 2px solid #000;
-      border-radius: 20px;
-      color: white;
-      text-transform: uppercase;
-      cursor: pointer;
-    }
-    #msg {
-      color: red;
-      font-weight: bold;
-      margin: 10px 0;
-    }
+
     body {
-      font-family: Arial, sans-serif;
+      background: #0a0a0a;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
-      background: #f0f0f0;
+      min-height: 100vh;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
     }
+
+    /* พื้นหลังเอฟเฟกต์ */
+    .bg-effect {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 50%, rgba(245, 6, 2, 0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(245, 6, 2, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 40% 80%, rgba(245, 6, 2, 0.08) 0%, transparent 50%);
+      z-index: -1;
+    }
+
     .container {
-      width: 300px;
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .login-card {
+      background: rgba(20, 20, 20, 0.95);
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(245, 6, 2, 0.2),
+                  0 0 0 1px rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .login-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 50px rgba(245, 6, 2, 0.3),
+                  0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    .card-header {
+      background: linear-gradient(to right, #1a1a1a, #0a0a0a);
+      color: white;
+      padding: 25px 20px;
       text-align: center;
+      position: relative;
+      border-bottom: 2px solid #F50602;
+    }
+
+    .logo-container {
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .logo {
+      max-width: 180px;
+      height: auto;
+      filter: drop-shadow(0 0 8px rgba(245, 6, 2, 0.5));
+    }
+
+    .card-header h1 {
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+      background: linear-gradient(to right, #fff, #ff9999);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 15px rgba(245, 6, 2, 0.3);
+    }
+
+    .card-header p {
+      font-size: 15px;
+      opacity: 0.8;
+      font-weight: 300;
+      color: #ccc;
+    }
+
+    .card-body {
+      padding: 35px 30px;
+    }
+
+    .input-group {
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #ddd;
+      font-size: 15px;
+      letter-spacing: 0.5px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 16px 20px 16px 50px;
+      background: rgba(10, 10, 10, 0.7);
+      border: 2px solid #333;
+      border-radius: 12px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      color: #fff;
+    }
+
+    .input-field::placeholder {
+      color: #666;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: #F50602;
+      background: rgba(20, 20, 20, 0.9);
+      box-shadow: 0 0 0 3px rgba(245, 6, 2, 0.2);
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 18px;
+      top: 42px;
+      color: #666;
+      font-size: 18px;
+      transition: color 0.3s ease;
+    }
+
+    .input-field:focus + .input-icon {
+      color: #F50602;
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(to right, #F50602, #cc0502);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 15px;
+      box-shadow: 0 6px 20px rgba(245, 6, 2, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.7s ease;
+    }
+
+    .login-button:hover::before {
+      left: 100%;
+    }
+
+    .login-button:hover {
+      background: linear-gradient(to right, #ff1a1a, #dd0502);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(245, 6, 2, 0.5);
+    }
+
+    .login-button:active {
+      transform: translateY(0);
+    }
+
+    .login-button i {
+      font-size: 20px;
+    }
+
+    .message {
+      padding: 15px;
+      border-radius: 10px;
+      margin: 20px 0;
+      text-align: center;
+      font-weight: 600;
+      display: none;
+      border-left: 4px solid transparent;
+    }
+
+    .message.error {
+      background: rgba(245, 6, 2, 0.1);
+      color: #ff6666;
+      border-left-color: #F50602;
+      display: block;
+    }
+
+    .message.success {
+      background: rgba(0, 200, 0, 0.1);
+      color: #66ff66;
+      border-left-color: #00cc00;
+      display: block;
+    }
+
+    .message.loading {
+      background: rgba(0, 100, 255, 0.1);
+      color: #66aaff;
+      border-left-color: #0088ff;
+      display: block;
+    }
+
+    .forgot-link {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    .forgot-link a {
+      color: #999;
+      text-decoration: none;
+      font-size: 15px;
+      transition: color 0.3s ease;
+    }
+
+    .forgot-link a:hover {
+      color: #F50602;
+      text-decoration: underline;
+    }
+
+    .card-footer {
+      background-color: rgba(15, 15, 15, 0.9);
+      padding: 20px;
+      text-align: center;
+      border-top: 1px solid #222;
+      color: #777;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .card-footer i {
+      color: #F50602;
+    }
+
+    @media (max-width: 480px) {
+      .card-body {
+        padding: 25px 20px;
+      }
+      
+      .container {
+        padding: 10px;
+      }
+      
+      .logo {
+        max-width: 150px;
+      }
+      
+      .card-header h1 {
+        font-size: 22px;
+      }
+    }
+
+    .pulse-animation {
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { border-color: #333; }
+      50% { border-color: #F50602; }
+      100% { border-color: #333; }
+    }
+
+    /* เอฟเฟกต์แสงส่อง */
+    .glow-effect {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(245, 6, 2, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: -1;
+      animation: float 15s infinite ease-in-out;
+    }
+
+    .glow-effect:nth-child(1) {
+      top: 10%;
+      left: 10%;
+    }
+
+    .glow-effect:nth-child(2) {
+      bottom: 15%;
+      right: 10%;
+      animation-delay: -5s;
+    }
+
+    .glow-effect:nth-child(3) {
+      top: 50%;
+      left: 80%;
+      animation-delay: -10s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -30px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.9); }
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: var(--gray-color);
+      font-size: 0.9rem;
+      border-top: 1px solid #eee;
+      background-color: rgba(248, 249, 250, 0.8);
+    }
+    
+    footer p {
+      margin-bottom: 8px;
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 15px;
+    }
+    
+    .footer-links a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    
+    .footer-links a:hover {
+      color: var(--secondary-color);
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
+  <div class="bg-effect"></div>
+  
+  <!-- เอฟเฟกต์แสงลอย -->
+  <div class="glow-effect"></div>
+  <div class="glow-effect"></div>
+  <div class="glow-effect"></div>
+  
   <div class="container">
-    <h2 style="color:#F50602;">เฉพาะพนักงานเท่านั้น</h2>
-    <form name="myform" onsubmit="return false;">
-      <input type="text" name="uname" class="inputtext" placeholder="รหัสพนักงาน"><br>
-      <input type="password" name="pass" class="inputtext" placeholder="วันที่เริ่มงาน"><br>
-      <div id="msg"></div>
-      <input type="button" class="button" value="Login" onclick="login()">
-    </form>
+    <div class="login-card">
+      <div class="card-header">
+        <div class="logo-container">
+          <img src="https://sarawutc6689-cpu.github.io/hrmouldmate-login/logotokai.png" alt="TOKAI Logo" class="logo">
+        </div>
+        <h1>ระบบล็อกอินพนักงาน</h1>
+        <p>เฉพาะพนักงาน TOKAISOLIDTIRE ที่ลงทะเบียนเท่านั้น</p>
+      </div>
+      
+      <div class="card-body">
+        <form name="myform" onsubmit="return false;">
+          <div class="input-group">
+            <label for="uname"><i class="fas fa-id-card"></i> รหัสพนักงาน</label>
+            <div class="input-icon">
+              <i class="fas fa-user"></i>
+            </div>
+            <input type="text" name="uname" id="uname" class="input-field" placeholder="กรุณากรอกรหัสพนักงาน" autocomplete="username">
+          </div>
+          
+          <div class="input-group">
+            <label for="pass"><i class="fas fa-calendar-day"></i> วันที่เริ่มงาน</label>
+            <div class="input-icon">
+              <i class="fas fa-calendar-alt"></i>
+            </div>
+            <input type="password" name="pass" id="pass" class="input-field" placeholder="กรุณากรอกวันที่เริ่มงาน" autocomplete="current-password">
+          </div>
+          
+          <div id="msg" class="message"></div>
+          
+          <button type="button" class="login-button" onclick="login()">
+            <i class="fas fa-sign-in-alt"></i>
+            เข้าสู่ระบบ
+          </button>
+          
+          <div class="forgot-link">
+            <a href="#" onclick="showHelp()"><i class="fas fa-question-circle"></i> ขอความช่วยเหลือ</a>
+          </div>
+        </form>
+      </div>
+      
+      <div class="card-footer">
+        <i class="fas fa-shield-alt"></i>
+        <p>ระบบรักษาความปลอดภัย © 2026 | พัฒนาโดย Sarawut.C</p>
+        <i class="fas fa-shield-alt"></i>
+      </div>
+    </div>
   </div>
 
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzAijcj7vNQID_anRwaSsSi_A3RRyWjTeCadJ-LG9Lx0ktJ48YLKraOamTuFDheO9DvTg/exec";
     const DASHBOARD_URL = "Dashboard_IT.html";
 
-    function login() {
-      var user = document.forms["myform"]["uname"].value;
-      var pass = document.forms["myform"]["pass"].value;
+    // เพิ่มฟังก์ชันสำหรับการกด Enter
+    document.addEventListener('DOMContentLoaded', function() {
+      // ใส่รหัสพนักงานอัตโนมัติเมื่อโหลดหน้า (สำหรับทดสอบ)
+      // document.getElementById('uname').value = "TEST001";
+      // document.getElementById('pass').value = "01012023";
+      
+      document.getElementById('pass').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          login();
+        }
+      });
+    });
 
+    function showHelp() {
+      const helpMsg = `ข้อมูลการเข้าสู่ระบบ:
+      1. รหัสพนักงาน: กรอกรหัสพนักงานที่ได้รับจากบริษัท
+      2. วันที่เริ่มงาน: กรอกวันที่เริ่มงานในรูปแบบ DDMMYYYY
+      3. หากลืมรหัสผ่าน กรุณาติดต่อฝ่ายทรัพยากรบุคคล`;
+      
+      document.getElementById("msg").className = "message loading";
+      document.getElementById("msg").innerHTML = `<i class="fas fa-info-circle"></i> ${helpMsg}`;
+      document.getElementById("msg").style.display = "block";
+      
+      // ซ่อนข้อความช่วยเหลือหลังจาก 8 วินาที
+      setTimeout(() => {
+        document.getElementById("msg").style.display = "none";
+      }, 8000);
+    }
+
+    function login() {
+      const user = document.forms["myform"]["uname"].value.trim();
+      const pass = document.forms["myform"]["pass"].value.trim();
+      const msgElement = document.getElementById("msg");
+
+      // Reset message
+      msgElement.className = "message";
+      msgElement.textContent = "";
+      msgElement.style.display = "none";
+
+      // Validation
       if(user === "" || pass === "") {
-        document.getElementById("msg").innerHTML = "กรุณากรอก username และ password";
+        msgElement.className = "message error";
+        msgElement.innerHTML = "<i class='fas fa-exclamation-circle'></i> กรุณากรอกข้อมูลให้ครบทุกช่อง";
+        msgElement.style.display = "block";
+        
+        // เพิ่ม effect การสั่นให้กับช่องที่ว่าง
+        if(user === "") {
+          document.getElementById('uname').classList.add('pulse-animation');
+          setTimeout(() => document.getElementById('uname').classList.remove('pulse-animation'), 1500);
+        }
+        if(pass === "") {
+          document.getElementById('pass').classList.add('pulse-animation');
+          setTimeout(() => document.getElementById('pass').classList.remove('pulse-animation'), 1500);
+        }
         return;
       }
-      document.getElementById("msg").style.color = "blue";
-      document.getElementById("msg").innerHTML = "กำลังนำท่านเข้าสู่ระบบ...";
 
+      // ตรวจสอบรูปแบบวันที่เริ่มงาน (ถ้ามี)
+      if(pass.length === 8 && !isNaN(pass)) {
+        // ตรวจสอบเบื้องต้นว่าวันที่สมเหตุสมผลหรือไม่
+        const day = parseInt(pass.substring(0, 2));
+        const month = parseInt(pass.substring(2, 4));
+        const year = parseInt(pass.substring(4, 8));
+        
+        if(day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > 2100) {
+          msgElement.className = "message error";
+          msgElement.innerHTML = "<i class='fas fa-calendar-times'></i> รูปแบบวันที่เริ่มงานไม่ถูกต้อง (DDMMYYYY)";
+          msgElement.style.display = "block";
+          document.getElementById('pass').classList.add('pulse-animation');
+          setTimeout(() => document.getElementById('pass').classList.remove('pulse-animation'), 1500);
+          return;
+        }
+      }
+
+      // แสดงสถานะกำลังโหลด
+      msgElement.className = "message loading";
+      msgElement.innerHTML = "<i class='fas fa-spinner fa-spin'></i> กำลังตรวจสอบข้อมูล กรุณารอสักครู่...";
+      msgElement.style.display = "block";
+
+      // ปุ่มล็อกอินให้แสดงสถานะโหลด
+      const loginBtn = document.querySelector('.login-button');
+      const originalBtnText = loginBtn.innerHTML;
+      loginBtn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> กำลังตรวจสอบ...";
+      loginBtn.disabled = true;
+
+      // ส่งข้อมูลไปยัง API
       fetch(SCRIPT_URL, {
         method: "POST",
         body: new URLSearchParams({
@@ -78,35 +521,65 @@
         })
       })
       .then(res => res.text())
-     .then(txt => {
+      .then(txt => {
         console.log("Raw response:", txt);
         let data;
         try {
           data = JSON.parse(txt);
         } catch(e) {
           console.error("ไม่ใช่ JSON ที่ถูกต้อง:", e);
-         return;
-       }
-         console.log("Login API response:", data);
-
+          msgElement.className = "message error";
+          msgElement.innerHTML = "<i class='fas fa-server'></i> การตอบกลับจากเซิร์ฟเวอร์ไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง";
+          msgElement.style.display = "block";
+          loginBtn.innerHTML = originalBtnText;
+          loginBtn.disabled = false;
+          return;
+        }
+        console.log("Login API response:", data);
 
         if(data.status === "success" && data.userStatus === "Online") {
+          msgElement.className = "message success";
+          msgElement.innerHTML = "<i class='fas fa-check-circle'></i> ล็อกอินสำเร็จ! กำลังนำท่านเข้าสู่ระบบ...";
+          msgElement.style.display = "block";
+          
+          // เอฟเฟกต์สำเร็จ
+          loginBtn.innerHTML = "<i class='fas fa-check'></i> สำเร็จ!";
+          loginBtn.style.background = "linear-gradient(to right, #00cc00, #009900)";
+          
+          // บันทึกข้อมูลใน localStorage
           localStorage.setItem("username", user);
-          localStorage.setItem("authToken", user); // ✅ ใช้ username เป็น token
+          localStorage.setItem("authToken", user);
           localStorage.setItem("expireTime", Date.now() + 1000*60*30); // 30 นาที
-          window.open(DASHBOARD_URL, "_self");
+          
+          // หน่วงเวลาเพื่อแสดงข้อความสำเร็จก่อนเปลี่ยนหน้า
+          setTimeout(() => {
+            window.open(DASHBOARD_URL, "_self");
+          }, 1500);
         } else {
-          document.getElementById("msg").innerHTML = "ชื่อผู้ใช้ หรือรหัสผ่านไม่ถูกต้อง";
+          msgElement.className = "message error";
+          msgElement.innerHTML = "<i class='fas fa-exclamation-circle'></i> ชื่อผู้ใช้ หรือรหัสผ่านไม่ถูกต้อง";
+          msgElement.style.display = "block";
+          loginBtn.innerHTML = originalBtnText;
+          loginBtn.disabled = false;
+          
+          // เพิ่ม effect การสั่นให้กับช่อง input
+          document.getElementById('uname').classList.add('pulse-animation');
+          document.getElementById('pass').classList.add('pulse-animation');
+          setTimeout(() => {
+            document.getElementById('uname').classList.remove('pulse-animation');
+            document.getElementById('pass').classList.remove('pulse-animation');
+          }, 1500);
         }
       })
       .catch(err => {
-        document.getElementById("msg").innerHTML = "เกิดข้อผิดพลาด กรุณาลองใหม่";
         console.error("Login API error:", err);
+        msgElement.className = "message error";
+        msgElement.innerHTML = "<i class='fas fa-exclamation-triangle'></i> เกิดข้อผิดพลาดในการเชื่อมต่อ กรุณาลองใหม่";
+        msgElement.style.display = "block";
+        loginBtn.innerHTML = originalBtnText;
+        loginBtn.disabled = false;
       });
     }
   </script>
 </body>
 </html>
-
-
-
