@@ -133,14 +133,19 @@
         }
 
         .dept-icon {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            font-size: 2rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+        }
+
+        .department-card:hover .dept-icon {
+            transform: scale(1.1) rotate(10deg);
         }
 
         .hr-icon {
@@ -161,33 +166,8 @@
         .dept-info p {
             color: var(--text-gray);
             font-size: 0.95rem;
-        }
-
-        .stats {
-            display: flex;
-            gap: 20px;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 1.8rem;
-            font-weight: 600;
-        }
-
-        .hr-stat {
-            color: var(--hr-color);
-        }
-
-        .safety-stat {
-            color: var(--safety-color);
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            color: var(--text-gray);
+            max-width: 300px;
+            line-height: 1.5;
         }
 
         .card-content {
@@ -215,13 +195,14 @@
         }
 
         .feature-item i {
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem;
+            font-size: 1.1rem;
+            flex-shrink: 0;
         }
 
         .hr-feature i {
@@ -395,6 +376,14 @@
             }
         }
 
+        .department-description {
+            margin-top: 10px;
+            font-size: 0.95rem;
+            color: var(--text-gray);
+            line-height: 1.5;
+            padding-right: 20px;
+        }
+
         @media (max-width: 1300px) {
             .dept-container {
                 grid-template-columns: 1fr;
@@ -427,9 +416,13 @@
                 align-items: flex-start;
             }
             
-            .stats {
-                width: 100%;
-                justify-content: space-around;
+            .dept-info p {
+                max-width: 100%;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -462,20 +455,9 @@
                         <div class="dept-info">
                             <h2>แผนกทรัพยากรบุคคล</h2>
                             <p>บริหารจัดการบุคลากรและพัฒนาศักยภาพ</p>
-                        </div>
-                    </div>
-                    <div class="stats">
-                        <div class="stat-item">
-                            <div class="stat-value hr-stat">42</div>
-                            <div class="stat-label">พนักงาน</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value hr-stat">8</div>
-                            <div class="stat-label">ตำแหน่งว่าง</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value hr-stat">5</div>
-                            <div class="stat-label">ฝึกอบรม</div>
+                            <div class="department-description">
+                                ดูแลระบบการจัดการบุคลากรครบวงจร ตั้งแต่การสรรหา ฝึกอบรม พัฒนาศักยภาพ และรักษาพนักงานที่มีความสามารถ
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -533,20 +515,9 @@
                         <div class="dept-info">
                             <h2>แผนกความปลอดภัย</h2>
                             <p>ตรวจสอบและป้องกันความเสี่ยงในองค์กร</p>
-                        </div>
-                    </div>
-                    <div class="stats">
-                        <div class="stat-item">
-                            <div class="stat-value safety-stat">156</div>
-                            <div class="stat-label">วันปลอดอุบัติเหตุ</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value safety-stat">3</div>
-                            <div class="stat-label">การตรวจพบเดือนนี้</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value safety-stat">100%</div>
-                            <div class="stat-label">ฝึกอบรมแล้ว</div>
+                            <div class="department-description">
+                                จัดการระบบความปลอดภัยทุกด้าน ตั้งแต่การป้องกันอัคคีภัย ความปลอดภัยในการทำงาน ไปจนถึงระบบรักษาความปลอดภัยทางไซเบอร์
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -644,31 +615,39 @@
                             </div>
                         `;
                         
+                        // เพิ่มสไตล์สำหรับ animation
+                        const style = document.createElement('style');
+                        style.textContent = `
+                            @keyframes slideIn {
+                                from { transform: translateX(100%); opacity: 0; }
+                                to { transform: translateX(0); opacity: 1; }
+                            }
+                        `;
+                        document.head.appendChild(style);
+                        
                         document.body.appendChild(notification);
                         
                         // ลบ notification หลังจาก 3 วินาที
                         setTimeout(() => {
-                            notification.remove();
+                            notification.style.animation = 'slideOut 0.3s ease-out';
+                            setTimeout(() => {
+                                notification.remove();
+                            }, 300);
                         }, 3000);
                     }, 150);
                 });
             });
             
-            // เพิ่มเอฟเฟกต์ตัวเลขนับขึ้น
-            const statValues = document.querySelectorAll('.stat-value');
-            
-            statValues.forEach(stat => {
-                const target = parseInt(stat.textContent);
-                let current = 0;
-                const increment = target / 50;
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= target) {
-                        current = target;
-                        clearInterval(timer);
-                    }
-                    stat.textContent = Math.floor(current);
-                }, 30);
+            // เอฟเฟกต์ไอคอนหมุนเมื่อ hover
+            const icons = document.querySelectorAll('.dept-icon');
+            icons.forEach(icon => {
+                icon.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.2) rotate(20deg)';
+                });
+                
+                icon.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1.1) rotate(10deg)';
+                });
             });
         });
     </script>
