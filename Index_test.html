@@ -330,6 +330,39 @@
       33% { transform: translate(30px, -30px) scale(1.1); }
       66% { transform: translate(-20px, 20px) scale(0.9); }
     }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: var(--gray-color);
+      font-size: 0.9rem;
+      border-top: 1px solid #eee;
+      background-color: rgba(248, 249, 250, 0.8);
+    }
+    
+    footer p {
+      margin-bottom: 8px;
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 15px;
+    }
+    
+    .footer-links a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    
+    .footer-links a:hover {
+      color: var(--secondary-color);
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -347,7 +380,7 @@
           <img src="https://sarawutc6689-cpu.github.io/hrmouldmate-login/logotokai.png" alt="TOKAI Logo" class="logo">
         </div>
         <h1>ระบบล็อกอินพนักงาน</h1>
-        <p>เฉพาะพนักงาน TOKAI ที่ลงทะเบียนเท่านั้น</p>
+        <p>เฉพาะพนักงาน TOKAISOLIDTIRE ที่ลงทะเบียนเท่านั้น</p>
       </div>
       
       <div class="card-body">
@@ -383,11 +416,17 @@
       
       <div class="card-footer">
         <i class="fas fa-shield-alt"></i>
-        <p>ระบบรักษาความปลอดภัยระดับสูง | TOKAI Corporation</p>
+        <p>ระบบรักษาความปลอดภัย | TokaiSolidTire Corporation</p>
         <i class="fas fa-shield-alt"></i>
       </div>
     </div>
   </div>
+
+  <!-- Footer -->
+    <footer>
+      <p>ระบบรักษาความปลอดภัย  © 2026 | พัฒนาโดย Sarawut.C</p>
+      <p>สำหรับใช้ภายในองค์กรเท่านั้น</p>
+    </footer>
 
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzAijcj7vNQID_anRwaSsSi_A3RRyWjTeCadJ-LG9Lx0ktJ48YLKraOamTuFDheO9DvTg/exec";
