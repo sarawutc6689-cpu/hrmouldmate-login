@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HR & Knowledge Portal</title>
+    <title>HR Portal & Knowledge Center</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&family=Noto+Sans+Thai:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
@@ -18,6 +18,7 @@
             background-color: #f5f7fa;
             color: #333;
             line-height: 1.6;
+            min-height: 100vh;
         }
 
         .container {
@@ -106,6 +107,7 @@
             margin-bottom: 25px;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
         }
 
         .card:hover {
@@ -150,75 +152,120 @@
             color: #555;
         }
 
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .stat-item {
+        /* ปุ่มเข้าสู่ระบบส่วนงานบุคคล */
+        .hr-login-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            padding: 15px;
-            border-radius: 10px;
-            background-color: #f8f9fa;
+            min-height: 300px;
         }
 
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 600;
+        .hr-login-icon {
+            font-size: 4rem;
             color: #3498db;
-            display: block;
+            margin-bottom: 20px;
         }
 
-        .stat-label {
-            font-size: 0.9rem;
+        .hr-login-title {
+            font-family: 'Kanit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .hr-login-description {
             color: #666;
+            margin-bottom: 25px;
+            max-width: 400px;
+            line-height: 1.6;
         }
 
-        .leave-requests, .upcoming-events, .knowledge-list, .news-list {
+        .login-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+            min-width: 200px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(52, 152, 219, 0.4);
+            background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+        }
+
+        .login-btn i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* ส่วนข่าวสารและเกร็ดความรู้ */
+        .knowledge-list, .news-list {
             list-style: none;
         }
 
-        .leave-requests li, .upcoming-events li, .knowledge-list li, .news-list li {
+        .knowledge-list li, .news-list li {
             padding: 12px 0;
             border-bottom: 1px solid #eee;
             display: flex;
             align-items: center;
         }
 
-        .leave-requests li:last-child, .upcoming-events li:last-child, .knowledge-list li:last-child, .news-list li:last-child {
+        .knowledge-list li:last-child, .news-list li:last-child {
             border-bottom: none;
-        }
-
-        .status-badge {
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            margin-left: auto;
-        }
-
-        .approved {
-            background-color: #d5f4e6;
-            color: #27ae60;
-        }
-
-        .pending {
-            background-color: #fff3cd;
-            color: #856404;
         }
 
         .date {
             color: #7f8c8d;
             font-size: 0.9rem;
-            margin-left: 10px;
+            margin-left: auto;
         }
 
         .knowledge-list li i, .news-list li i {
             color: #2ecc71;
             margin-right: 10px;
             font-size: 1.1rem;
+        }
+
+        .news-tag {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-right: 8px;
+        }
+
+        .tech-tag {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .hr-tag {
+            background-color: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .health-tag {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .event-tag {
+            background-color: #fff3e0;
+            color: #ef6c00;
         }
 
         footer {
@@ -238,7 +285,7 @@
         .btn {
             display: inline-block;
             padding: 10px 20px;
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
             color: white;
             border-radius: 25px;
             text-decoration: none;
@@ -251,7 +298,36 @@
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 10px rgba(52, 152, 219, 0.3);
+            box-shadow: 0 5px 10px rgba(46, 204, 113, 0.3);
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .quick-link-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.2s ease;
+        }
+
+        .quick-link-item:hover {
+            background-color: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .quick-link-item i {
+            margin-right: 10px;
+            color: #3498db;
+            font-size: 1.2rem;
         }
     </style>
 </head>
@@ -260,9 +336,9 @@
         <div class="container">
             <div class="logo-area">
                 <i class="fas fa-chart-network logo-icon"></i>
-                <h1>HR & Knowledge Portal</h1>
+                <h1>HR Portal & Knowledge Center</h1>
             </div>
-            <p class="subtitle">ศูนย์กลางข้อมูลทรัพยากรบุคคลและแหล่งความรู้สำหรับพนักงานทุกท่าน</p>
+            <p class="subtitle">ศูนย์กลางระบบงานบุคคลและแหล่งความรู้สำหรับพนักงานทุกท่าน</p>
         </div>
     </header>
 
@@ -272,90 +348,62 @@
             <section class="hr-section">
                 <h2 class="section-title"><i class="fas fa-users"></i>ส่วนงานบุคคล</h2>
                 
-                <div class="card hr-card">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <i class="fas fa-chart-pie"></i>
-                        </div>
-                        <h3 class="card-title">ภาพรวมทรัพยากรบุคคล</h3>
+                <div class="card hr-card hr-login-card">
+                    <div class="hr-login-icon">
+                        <i class="fas fa-user-lock"></i>
                     </div>
-                    <div class="card-content">
-                        <p>ข้อมูลสรุปเกี่ยวกับพนักงานภายในองค์กร ณ วันที่ 30 มิถุนายน 2566</p>
-                        <div class="stats-container">
-                            <div class="stat-item">
-                                <span class="stat-number">142</span>
-                                <span class="stat-label">พนักงานทั้งหมด</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-number">12</span>
-                                <span class="stat-label">ตำแหน่งว่าง</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-number">94%</span>
-                                <span class="stat-label">อัตราการเข้าทำงาน</span>
-                            </div>
-                        </div>
-                    </div>
+                    <h2 class="hr-login-title">ระบบงานบุคคล (HR System)</h2>
+                    <p class="hr-login-description">
+                        เข้าสู่ระบบงานบุคคลเพื่อจัดการข้อมูลพนักงาน ขอลา ตรวจสอบวันหยุด 
+                        และดูข้อมูลส่วนตัวของคุณ ระบบนี้สำหรับพนักงานและผู้บริหารเท่านั้น
+                    </p>
+                    <a href="https://sarawutc6689-cpu.github.io/hrmouldmate-login/Index_HR.html" class="login-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i>เข้าสู่ระบบงานบุคคล
+                    </a>
                 </div>
                 
                 <div class="card hr-card">
                     <div class="card-header">
                         <div class="card-icon">
-                            <i class="fas fa-calendar-alt"></i>
+                            <i class="fas fa-info-circle"></i>
                         </div>
-                        <h3 class="card-title">คำขอลางานล่าสุด</h3>
+                        <h3 class="card-title">ข้อมูลเกี่ยวกับระบบ</h3>
                     </div>
                     <div class="card-content">
-                        <ul class="leave-requests">
-                            <li>นายสมชาย ใจดี <span class="date">12-15 มิ.ย. 2566</span> <span class="status-badge approved">อนุมัติแล้ว</span></li>
-                            <li>นางสาวสุนิสา วัฒนา <span class="date">18-19 มิ.ย. 2566</span> <span class="status-badge pending">รอดำเนินการ</span></li>
-                            <li>นายก้องภพ เสียงใส <span class="date">22-23 มิ.ย. 2566</span> <span class="status-badge approved">อนุมัติแล้ว</span></li>
-                            <li>นางชลลดา ใจกว้าง <span class="date">25-30 มิ.ย. 2566</span> <span class="status-badge pending">รอดำเนินการ</span></li>
+                        <p>ระบบงานบุคคลนี้ช่วยให้คุณ:</p>
+                        <ul style="padding-left: 20px; margin-top: 10px;">
+                            <li style="padding: 5px 0;">ตรวจสอบและแก้ไขข้อมูลส่วนตัว</li>
+                            <li style="padding: 5px 0;">ส่งคำขอลางานและติดตามสถานะ</li>
+                            <li style="padding: 5px 0;">ดูตารางวันหยุดและวันสำคัญ</li>
+                            <li style="padding: 5px 0;">ดาวน์โหลดสลิปเงินเดือนและเอกสารสำคัญ</li>
+                            <li style="padding: 5px 0;">ติดต่อฝ่ายทรัพยากรบุคคล</li>
                         </ul>
-                        <a href="#" class="btn">ดูคำขอลางานทั้งหมด</a>
-                    </div>
-                </div>
-                
-                <div class="card hr-card">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <i class="fas fa-bullhorn"></i>
+                        
+                        <div class="quick-links">
+                            <a href="#" class="quick-link-item">
+                                <i class="fas fa-file-alt"></i>
+                                <span>คู่มือการใช้งานระบบ</span>
+                            </a>
+                            <a href="#" class="quick-link-item">
+                                <i class="fas fa-phone-alt"></i>
+                                <span>ติดต่อฝ่าย HR</span>
+                            </a>
+                            <a href="#" class="quick-link-item">
+                                <i class="fas fa-calendar-check"></i>
+                                <span>ตารางวันหยุดประจำปี</span>
+                            </a>
+                            <a href="#" class="quick-link-item">
+                                <i class="fas fa-question-circle"></i>
+                                <span>คำถามที่พบบ่อย</span>
+                            </a>
                         </div>
-                        <h3 class="card-title">กิจกรรมและข่าวสารภายใน</h3>
-                    </div>
-                    <div class="card-content">
-                        <ul class="upcoming-events">
-                            <li><span class="highlight">28 มิ.ย. 2566:</span> อบรม Leadership Development</li>
-                            <li><span class="highlight">5 ก.ค. 2566:</span> กิจกรรม CSR ปลูกป่าชายเลน</li>
-                            <li><span class="highlight">15 ก.ค. 2566:</span> ตรวจสุขภาพประจำปีพนักงาน</li>
-                            <li><span class="highlight">28 ก.ค. 2566:</span> งานเลี้ยงสังสรรค์ครึ่งปี</li>
-                        </ul>
                     </div>
                 </div>
             </section>
             
-            <!-- ส่วนเกร็ดความรู้และข่าวสาร -->
+            <!-- ส่วนข่าวสารและเกร็ดความรู้ -->
             <section class="knowledge-section">
-                <h2 class="section-title"><i class="fas fa-lightbulb"></i>เกร็ดความรู้และข่าวสาร</h2>
-                
-                <div class="card knowledge-card">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <i class="fas fa-book-open"></i>
-                        </div>
-                        <h3 class="card-title">บทความน่าอ่าน</h3>
-                    </div>
-                    <div class="card-content">
-                        <ul class="knowledge-list">
-                            <li><i class="fas fa-chevron-right"></i> 5 เทคนิคการทำงานจากบ้านอย่างมีประสิทธิภาพ</li>
-                            <li><i class="fas fa-chevron-right"></i> การจัดการเวลาด้วยเทคนิค Pomodoro</li>
-                            <li><i class="fas fa-chevron-right"></i> วิธีสื่อสารในที่ทำงานอย่างมืออาชีพ</li>
-                            <li><i class="fas fa-chevron-right"></i> การเตรียมตัวนำเสนอผลงานให้โดนใจ</li>
-                            <li><i class="fas fa-chevron-right"></i> การสร้างสมดุลระหว่างงานและชีวิตส่วนตัว</li>
-                        </ul>
-                        <a href="#" class="btn">อ่านบทความทั้งหมด</a>
-                    </div>
-                </div>
+                <h2 class="section-title"><i class="fas fa-lightbulb"></i>ข่าวสารและเกร็ดความรู้</h2>
                 
                 <div class="card knowledge-card">
                     <div class="card-header">
@@ -366,11 +414,53 @@
                     </div>
                     <div class="card-content">
                         <ul class="news-list">
-                            <li><i class="far fa-newspaper"></i> <strong>Tech Update:</strong> AI Tools ใหม่ๆ สำหรับการทำงานยุคปัจจุบัน <span class="date">25 มิ.ย. 2566</span></li>
-                            <li><i class="far fa-newspaper"></i> <strong>Market Trend:</strong> แนวโน้มการทำงานแบบ Hybrid ในปี 2023 <span class="date">22 มิ.ย. 2566</span></li>
-                            <li><i class="far fa-newspaper"></i> <strong>Industry News:</strong> การเปลี่ยนแปลงกฎหมายแรงงานที่ควรรู้ <span class="date">18 มิ.ย. 2566</span></li>
-                            <li><i class="far fa-newspaper"></i> <strong>Health Tips:</strong> ดูแลสุขภาพตาจากการทำงานหน้าจอ <span class="date">15 มิ.ย. 2566</span></li>
+                            <li>
+                                <i class="far fa-newspaper"></i>
+                                <span class="news-tag tech-tag">Tech</span>
+                                <strong>AI Tools ใหม่สำหรับการทำงานยุคปัจจุบัน</strong>
+                                <span class="date">25 มิ.ย. 2566</span>
+                            </li>
+                            <li>
+                                <i class="far fa-newspaper"></i>
+                                <span class="news-tag hr-tag">HR</span>
+                                <strong>อัพเดทนโยบายการทำงานแบบ Hybrid</strong>
+                                <span class="date">22 มิ.ย. 2566</span>
+                            </li>
+                            <li>
+                                <i class="far fa-newspaper"></i>
+                                <span class="news-tag health-tag">สุขภาพ</span>
+                                <strong>วิธีดูแลสุขภาพตาจากการทำงานหน้าจอ</strong>
+                                <span class="date">18 มิ.ย. 2566</span>
+                            </li>
+                            <li>
+                                <i class="far fa-newspaper"></i>
+                                <span class="news-tag event-tag">กิจกรรม</span>
+                                <strong>เตรียมพบกับกิจกรรม CSR ปลูกรักสิ่งแวดล้อม</strong>
+                                <span class="date">15 มิ.ย. 2566</span>
+                            </li>
                         </ul>
+                        <a href="#" class="btn">ดูข่าวสารทั้งหมด</a>
+                    </div>
+                </div>
+                
+                <div class="card knowledge-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <h3 class="card-title">เกร็ดความรู้ประจำสัปดาห์</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: #2c3e50; margin-bottom: 10px;">5 เทคนิคการประชุมออนไลน์ให้มีประสิทธิภาพ</h4>
+                        <p>ในยุคที่การทำงานจากบ้านหรือแบบ Hybrid เป็นเรื่องปกติ การประชุมออนไลน์มีบทบาทสำคัญมาก มาดูเทคนิคการประชุมออนไลน์ให้มีประสิทธิภาพ:</p>
+                        <ul style="padding-left: 20px; margin-top: 10px;">
+                            <li style="padding: 5px 0;">เตรียมวาระการประชุมล่วงหน้าและแจ้งให้ผู้เข้าร่วมทราบ</li>
+                            <li style="padding: 5px 0;">ทดสอบอุปกรณ์และเชื่อมต่ออินเทอร์เน็ตก่อนเริ่มประชุม</li>
+                            <li style="padding: 5px 0;">เปิดกล้องเพื่อสร้างการมีส่วนร่วมและความเชื่อมโยง</li>
+                            <li style="padding: 5px 0;">ตั้งกฎพื้นฐานเช่นการใช้ปุ่มยกมือก่อนพูด</li>
+                            <li style="padding: 5px 0;">บันทึกสรุปผลการประชุมและแจ้ง action items</li>
+                        </ul>
+                        <a href="#" class="btn">อ่านเกร็ดความรู้อื่นๆ</a>
                     </div>
                 </div>
                 
@@ -382,29 +472,34 @@
                         <h3 class="card-title">แหล่งเรียนรู้แนะนำ</h3>
                     </div>
                     <div class="card-content">
-                        <p>พัฒนาทักษะของตัวเองด้วยคอร์สเรียนออนไลน์จากแพลตฟอร์มเหล่านี้:</p>
-                        <div class="stats-container">
-                            <div class="stat-item">
+                        <p>พัฒนาทักษะของตัวเองด้วยแหล่งเรียนรู้เหล่านี้:</p>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 15px;">
+                            <div style="text-align: center; padding: 15px; background-color: #f8f9fa; border-radius: 8px;">
                                 <i class="fas fa-laptop-code" style="font-size: 1.8rem; color: #3498db; margin-bottom: 8px;"></i>
-                                <span class="stat-label">Coursera</span>
+                                <div style="font-weight: 500;">Coursera</div>
+                                <div style="font-size: 0.8rem; color: #666;">คอร์สธุรกิจและเทคโนโลยี</div>
                             </div>
-                            <div class="stat-item">
+                            <div style="text-align: center; padding: 15px; background-color: #f8f9fa; border-radius: 8px;">
                                 <i class="fas fa-chalkboard-teacher" style="font-size: 1.8rem; color: #3498db; margin-bottom: 8px;"></i>
-                                <span class="stat-label">LinkedIn Learning</span>
+                                <div style="font-weight: 500;">LinkedIn Learning</div>
+                                <div style="font-size: 0.8rem; color: #666;">พัฒนาทักษะอาชีพ</div>
                             </div>
-                            <div class="stat-item">
+                            <div style="text-align: center; padding: 15px; background-color: #f8f9fa; border-radius: 8px;">
                                 <i class="fas fa-university" style="font-size: 1.8rem; color: #3498db; margin-bottom: 8px;"></i>
-                                <span class="stat-label">FutureLearn</span>
+                                <div style="font-weight: 500;">FutureLearn</div>
+                                <div style="font-size: 0.8rem; color: #666;">คอร์สจากมหาวิทยาลัย</div>
                             </div>
                         </div>
-                        <p style="margin-top: 15px;">บริษัทสนับสนุนค่าเรียนบางส่วนสำหรับคอร์สที่เกี่ยวข้องกับการทำงาน</p>
+                        <p style="margin-top: 15px; font-size: 0.9rem; color: #666;">
+                            <i class="fas fa-info-circle" style="color: #3498db;"></i> บริษัทสนับสนุนค่าเรียนบางส่วนสำหรับคอร์สที่เกี่ยวข้องกับการทำงาน
+                        </p>
                     </div>
                 </div>
             </section>
         </div>
         
         <footer>
-            <p>HR & Knowledge Portal | ออกแบบเพื่อพนักงานทุกท่าน | อัปเดตล่าสุด: 30 มิถุนายน 2566</p>
+            <p>HR Portal & Knowledge Center | ออกแบบเพื่อพนักงานทุกท่าน | อัปเดตล่าสุด: <span id="current-date"></span></p>
             <p>ติดต่อฝ่ายทรัพยากรบุคคล: hr@company.com หรือ โทร 02-xxx-xxxx ต่อ 123</p>
         </footer>
     </div>
@@ -415,7 +510,10 @@
             // เพิ่มเอฟเฟกต์เมื่อคลิกที่การ์ด
             const cards = document.querySelectorAll('.card');
             cards.forEach(card => {
-                card.addEventListener('click', function() {
+                card.addEventListener('click', function(e) {
+                    // ไม่ทำอะไรถ้าคลิกที่ลิงก์
+                    if (e.target.tagName === 'A' || e.target.closest('a')) return;
+                    
                     this.style.transform = 'scale(0.99)';
                     setTimeout(() => {
                         this.style.transform = '';
@@ -429,8 +527,29 @@
             const todayString = today.toLocaleDateString('th-TH', options);
             
             // แสดงวันที่ปัจจุบันใน footer
-            const footer = document.querySelector('footer p:first-child');
-            footer.innerHTML = `HR & Knowledge Portal | ออกแบบเพื่อพนักงานทุกท่าน | อัปเดตล่าสุด: ${todayString}`;
+            document.getElementById('current-date').textContent = todayString;
+            
+            // แจ้งเตือนเมื่อคลิกปุ่มเข้าสู่ระบบ
+            const loginBtn = document.querySelector('.login-btn');
+            loginBtn.addEventListener('click', function(e) {
+                // เปิดในหน้าใหม่ (ทำโดย target="_blank" อยู่แล้ว)
+                console.log('กำลังเข้าสู่ระบบ HR...');
+            });
+            
+            // จำลองการโหลดข้อมูลข่าวสาร
+            setTimeout(() => {
+                const newsItems = document.querySelectorAll('.news-list li');
+                newsItems.forEach((item, index) => {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateX(-10px)';
+                    
+                    setTimeout(() => {
+                        item.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateX(0)';
+                    }, 100 * index);
+                });
+            }, 300);
         });
     </script>
 </body>
