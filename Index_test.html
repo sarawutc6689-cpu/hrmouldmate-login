@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ระบบล็อกอินพนักงาน</title>
+  <title>ระบบล็อกอินพนักงาน | TOKAI</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
@@ -14,66 +14,93 @@
     }
 
     body {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: #0a0a0a;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* พื้นหลังเอฟเฟกต์ */
+    .bg-effect {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 50%, rgba(245, 6, 2, 0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(245, 6, 2, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 40% 80%, rgba(245, 6, 2, 0.08) 0%, transparent 50%);
+      z-index: -1;
     }
 
     .container {
       width: 100%;
-      max-width: 450px;
+      max-width: 480px;
       margin: 0 auto;
     }
 
     .login-card {
-      background: white;
-      border-radius: 24px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      background: rgba(20, 20, 20, 0.95);
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(245, 6, 2, 0.2),
+                  0 0 0 1px rgba(255, 255, 255, 0.05);
       overflow: hidden;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .login-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 15px 50px rgba(245, 6, 2, 0.3),
+                  0 0 0 1px rgba(255, 255, 255, 0.08);
     }
 
     .card-header {
-      background: linear-gradient(to right, #F50602, #FF6B6B);
+      background: linear-gradient(to right, #1a1a1a, #0a0a0a);
       color: white;
-      padding: 30px 20px;
+      padding: 25px 20px;
       text-align: center;
       position: relative;
+      border-bottom: 2px solid #F50602;
+    }
+
+    .logo-container {
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .logo {
+      max-width: 180px;
+      height: auto;
+      filter: drop-shadow(0 0 8px rgba(245, 6, 2, 0.5));
     }
 
     .card-header h1 {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 700;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       letter-spacing: 1px;
+      background: linear-gradient(to right, #fff, #ff9999);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 15px rgba(245, 6, 2, 0.3);
     }
 
     .card-header p {
-      font-size: 16px;
-      opacity: 0.9;
+      font-size: 15px;
+      opacity: 0.8;
       font-weight: 300;
-    }
-
-    .card-header::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 5px;
-      background: rgba(255, 255, 255, 0.3);
+      color: #ccc;
     }
 
     .card-body {
-      padding: 40px 35px;
+      padding: 35px 30px;
     }
 
     .input-group {
@@ -83,35 +110,40 @@
 
     .input-group label {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       font-weight: 600;
-      color: #333;
+      color: #ddd;
       font-size: 15px;
+      letter-spacing: 0.5px;
     }
 
     .input-field {
       width: 100%;
       padding: 16px 20px 16px 50px;
-      border: 2px solid #e1e5ee;
+      background: rgba(10, 10, 10, 0.7);
+      border: 2px solid #333;
       border-radius: 12px;
       font-size: 16px;
       transition: all 0.3s ease;
-      background-color: #f8f9fa;
-      color: #333;
+      color: #fff;
+    }
+
+    .input-field::placeholder {
+      color: #666;
     }
 
     .input-field:focus {
       outline: none;
       border-color: #F50602;
-      background-color: white;
-      box-shadow: 0 0 0 4px rgba(245, 6, 2, 0.1);
+      background: rgba(20, 20, 20, 0.9);
+      box-shadow: 0 0 0 3px rgba(245, 6, 2, 0.2);
     }
 
     .input-icon {
       position: absolute;
       left: 18px;
       top: 42px;
-      color: #888;
+      color: #666;
       font-size: 18px;
       transition: color 0.3s ease;
     }
@@ -123,28 +155,45 @@
     .login-button {
       width: 100%;
       padding: 18px;
-      background: linear-gradient(to right, #F50602, #FF6B6B);
+      background: linear-gradient(to right, #F50602, #cc0502);
       color: white;
       border: none;
       border-radius: 12px;
       font-size: 18px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       cursor: pointer;
       transition: all 0.3s ease;
-      margin-top: 10px;
+      margin-top: 15px;
       box-shadow: 0 6px 20px rgba(245, 6, 2, 0.3);
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.7s ease;
+    }
+
+    .login-button:hover::before {
+      left: 100%;
     }
 
     .login-button:hover {
-      background: linear-gradient(to right, #d40502, #e65a5a);
+      background: linear-gradient(to right, #ff1a1a, #dd0502);
       transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(245, 6, 2, 0.4);
+      box-shadow: 0 10px 25px rgba(245, 6, 2, 0.5);
     }
 
     .login-button:active {
@@ -157,31 +206,32 @@
 
     .message {
       padding: 15px;
-      border-radius: 12px;
+      border-radius: 10px;
       margin: 20px 0;
       text-align: center;
       font-weight: 600;
       display: none;
+      border-left: 4px solid transparent;
     }
 
     .message.error {
-      background-color: #ffeaea;
-      color: #d32f2f;
-      border-left: 5px solid #d32f2f;
+      background: rgba(245, 6, 2, 0.1);
+      color: #ff6666;
+      border-left-color: #F50602;
       display: block;
     }
 
     .message.success {
-      background-color: #e8f5e9;
-      color: #2e7d32;
-      border-left: 5px solid #2e7d32;
+      background: rgba(0, 200, 0, 0.1);
+      color: #66ff66;
+      border-left-color: #00cc00;
       display: block;
     }
 
     .message.loading {
-      background-color: #e3f2fd;
-      color: #1565c0;
-      border-left: 5px solid #1565c0;
+      background: rgba(0, 100, 255, 0.1);
+      color: #66aaff;
+      border-left-color: #0088ff;
       display: block;
     }
 
@@ -191,7 +241,7 @@
     }
 
     .forgot-link a {
-      color: #666;
+      color: #999;
       text-decoration: none;
       font-size: 15px;
       transition: color 0.3s ease;
@@ -199,29 +249,41 @@
 
     .forgot-link a:hover {
       color: #F50602;
+      text-decoration: underline;
     }
 
     .card-footer {
-      background-color: #f8f9fa;
+      background-color: rgba(15, 15, 15, 0.9);
       padding: 20px;
       text-align: center;
-      border-top: 1px solid #eaeaea;
-      color: #666;
+      border-top: 1px solid #222;
+      color: #777;
       font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
     }
 
     .card-footer i {
       color: #F50602;
-      margin: 0 5px;
     }
 
     @media (max-width: 480px) {
       .card-body {
-        padding: 30px 25px;
+        padding: 25px 20px;
       }
       
       .container {
         padding: 10px;
+      }
+      
+      .logo {
+        max-width: 150px;
+      }
+      
+      .card-header h1 {
+        font-size: 22px;
       }
     }
 
@@ -230,24 +292,68 @@
     }
 
     @keyframes pulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.7; }
-      100% { opacity: 1; }
+      0% { border-color: #333; }
+      50% { border-color: #F50602; }
+      100% { border-color: #333; }
+    }
+
+    /* เอฟเฟกต์แสงส่อง */
+    .glow-effect {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(245, 6, 2, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: -1;
+      animation: float 15s infinite ease-in-out;
+    }
+
+    .glow-effect:nth-child(1) {
+      top: 10%;
+      left: 10%;
+    }
+
+    .glow-effect:nth-child(2) {
+      bottom: 15%;
+      right: 10%;
+      animation-delay: -5s;
+    }
+
+    .glow-effect:nth-child(3) {
+      top: 50%;
+      left: 80%;
+      animation-delay: -10s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -30px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.9); }
     }
   </style>
 </head>
 <body>
+  <div class="bg-effect"></div>
+  
+  <!-- เอฟเฟกต์แสงลอย -->
+  <div class="glow-effect"></div>
+  <div class="glow-effect"></div>
+  <div class="glow-effect"></div>
+  
   <div class="container">
     <div class="login-card">
       <div class="card-header">
+        <div class="logo-container">
+          <img src="https://sarawutc6689-cpu.github.io/hrmouldmate-login/logotokai.png" alt="TOKAI Logo" class="logo">
+        </div>
         <h1>ระบบล็อกอินพนักงาน</h1>
-        <p>เฉพาะพนักงานที่ลงทะเบียนเท่านั้น</p>
+        <p>เฉพาะพนักงาน TOKAI ที่ลงทะเบียนเท่านั้น</p>
       </div>
       
       <div class="card-body">
         <form name="myform" onsubmit="return false;">
           <div class="input-group">
-            <label for="uname">รหัสพนักงาน</label>
+            <label for="uname"><i class="fas fa-id-card"></i> รหัสพนักงาน</label>
             <div class="input-icon">
               <i class="fas fa-user"></i>
             </div>
@@ -255,7 +361,7 @@
           </div>
           
           <div class="input-group">
-            <label for="pass">วันที่เริ่มงาน</label>
+            <label for="pass"><i class="fas fa-calendar-day"></i> วันที่เริ่มงาน</label>
             <div class="input-icon">
               <i class="fas fa-calendar-alt"></i>
             </div>
@@ -270,13 +376,15 @@
           </button>
           
           <div class="forgot-link">
-            <a href="#" onclick="alert('กรุณาติดต่อฝ่ายทรัพยากรบุคคล');">ลืมรหัสผ่าน?</a>
+            <a href="#" onclick="showHelp()"><i class="fas fa-question-circle"></i> ขอความช่วยเหลือ</a>
           </div>
         </form>
       </div>
       
       <div class="card-footer">
-        <p><i class="fas fa-shield-alt"></i> ระบบรักษาความปลอดภัยระดับสูง <i class="fas fa-shield-alt"></i></p>
+        <i class="fas fa-shield-alt"></i>
+        <p>ระบบรักษาความปลอดภัยระดับสูง | TOKAI Corporation</p>
+        <i class="fas fa-shield-alt"></i>
       </div>
     </div>
   </div>
@@ -287,12 +395,32 @@
 
     // เพิ่มฟังก์ชันสำหรับการกด Enter
     document.addEventListener('DOMContentLoaded', function() {
+      // ใส่รหัสพนักงานอัตโนมัติเมื่อโหลดหน้า (สำหรับทดสอบ)
+      // document.getElementById('uname').value = "TEST001";
+      // document.getElementById('pass').value = "01012023";
+      
       document.getElementById('pass').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
           login();
         }
       });
     });
+
+    function showHelp() {
+      const helpMsg = `ข้อมูลการเข้าสู่ระบบ:
+      1. รหัสพนักงาน: กรอกรหัสพนักงานที่ได้รับจากบริษัท
+      2. วันที่เริ่มงาน: กรอกวันที่เริ่มงานในรูปแบบ DDMMYYYY
+      3. หากลืมรหัสผ่าน กรุณาติดต่อฝ่ายทรัพยากรบุคคล`;
+      
+      document.getElementById("msg").className = "message loading";
+      document.getElementById("msg").innerHTML = `<i class="fas fa-info-circle"></i> ${helpMsg}`;
+      document.getElementById("msg").style.display = "block";
+      
+      // ซ่อนข้อความช่วยเหลือหลังจาก 8 วินาที
+      setTimeout(() => {
+        document.getElementById("msg").style.display = "none";
+      }, 8000);
+    }
 
     function login() {
       const user = document.forms["myform"]["uname"].value.trim();
@@ -307,7 +435,7 @@
       // Validation
       if(user === "" || pass === "") {
         msgElement.className = "message error";
-        msgElement.textContent = "กรุณากรอกข้อมูลให้ครบทุกช่อง";
+        msgElement.innerHTML = "<i class='fas fa-exclamation-circle'></i> กรุณากรอกข้อมูลให้ครบทุกช่อง";
         msgElement.style.display = "block";
         
         // เพิ่ม effect การสั่นให้กับช่องที่ว่าง
@@ -320,6 +448,23 @@
           setTimeout(() => document.getElementById('pass').classList.remove('pulse-animation'), 1500);
         }
         return;
+      }
+
+      // ตรวจสอบรูปแบบวันที่เริ่มงาน (ถ้ามี)
+      if(pass.length === 8 && !isNaN(pass)) {
+        // ตรวจสอบเบื้องต้นว่าวันที่สมเหตุสมผลหรือไม่
+        const day = parseInt(pass.substring(0, 2));
+        const month = parseInt(pass.substring(2, 4));
+        const year = parseInt(pass.substring(4, 8));
+        
+        if(day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > 2100) {
+          msgElement.className = "message error";
+          msgElement.innerHTML = "<i class='fas fa-calendar-times'></i> รูปแบบวันที่เริ่มงานไม่ถูกต้อง (DDMMYYYY)";
+          msgElement.style.display = "block";
+          document.getElementById('pass').classList.add('pulse-animation');
+          setTimeout(() => document.getElementById('pass').classList.remove('pulse-animation'), 1500);
+          return;
+        }
       }
 
       // แสดงสถานะกำลังโหลด
@@ -351,7 +496,7 @@
         } catch(e) {
           console.error("ไม่ใช่ JSON ที่ถูกต้อง:", e);
           msgElement.className = "message error";
-          msgElement.textContent = "การตอบกลับจากเซิร์ฟเวอร์ไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง";
+          msgElement.innerHTML = "<i class='fas fa-server'></i> การตอบกลับจากเซิร์ฟเวอร์ไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง";
           msgElement.style.display = "block";
           loginBtn.innerHTML = originalBtnText;
           loginBtn.disabled = false;
@@ -363,6 +508,10 @@
           msgElement.className = "message success";
           msgElement.innerHTML = "<i class='fas fa-check-circle'></i> ล็อกอินสำเร็จ! กำลังนำท่านเข้าสู่ระบบ...";
           msgElement.style.display = "block";
+          
+          // เอฟเฟกต์สำเร็จ
+          loginBtn.innerHTML = "<i class='fas fa-check'></i> สำเร็จ!";
+          loginBtn.style.background = "linear-gradient(to right, #00cc00, #009900)";
           
           // บันทึกข้อมูลใน localStorage
           localStorage.setItem("username", user);
