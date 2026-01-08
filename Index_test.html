@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ระบบล็อกอินพนักงาน</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 450px;
+      margin: 0 auto;
+    }
+
+    .login-card {
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .login-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-header {
+      background: linear-gradient(to right, #F50602, #FF6B6B);
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .card-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .card-header p {
+      font-size: 16px;
+      opacity: 0.9;
+      font-weight: 300;
+    }
+
+    .card-header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .card-body {
+      padding: 40px 35px;
+    }
+
+    .input-group {
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+      font-size: 15px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 16px 20px 16px 50px;
+      border: 2px solid #e1e5ee;
+      border-radius: 12px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: #F50602;
+      background-color: white;
+      box-shadow: 0 0 0 4px rgba(245, 6, 2, 0.1);
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 18px;
+      top: 42px;
+      color: #888;
+      font-size: 18px;
+      transition: color 0.3s ease;
+    }
+
+    .input-field:focus + .input-icon {
+      color: #F50602;
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(to right, #F50602, #FF6B6B);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+      box-shadow: 0 6px 20px rgba(245, 6, 2, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .login-button:hover {
+      background: linear-gradient(to right, #d40502, #e65a5a);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(245, 6, 2, 0.4);
+    }
+
+    .login-button:active {
+      transform: translateY(0);
+    }
+
+    .login-button i {
+      font-size: 20px;
+    }
+
+    .message {
+      padding: 15px;
+      border-radius: 12px;
+      margin: 20px 0;
+      text-align: center;
+      font-weight: 600;
+      display: none;
+    }
+
+    .message.error {
+      background-color: #ffeaea;
+      color: #d32f2f;
+      border-left: 5px solid #d32f2f;
+      display: block;
+    }
+
+    .message.success {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+      border-left: 5px solid #2e7d32;
+      display: block;
+    }
+
+    .message.loading {
+      background-color: #e3f2fd;
+      color: #1565c0;
+      border-left: 5px solid #1565c0;
+      display: block;
+    }
+
+    .forgot-link {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    .forgot-link a {
+      color: #666;
+      text-decoration: none;
+      font-size: 15px;
+      transition: color 0.3s ease;
+    }
+
+    .forgot-link a:hover {
+      color: #F50602;
+    }
+
+    .card-footer {
+      background-color: #f8f9fa;
+      padding: 20px;
+      text-align: center;
+      border-top: 1px solid #eaeaea;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .card-footer i {
+      color: #F50602;
+      margin: 0 5px;
+    }
+
+    @media (max-width: 480px) {
+      .card-body {
+        padding: 30px 25px;
+      }
+      
+      .container {
+        padding: 10px;
+      }
+    }
+
+    .pulse-animation {
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="login-card">
+      <div class="card-header">
+        <h1>ระบบล็อกอินพนักงาน</h1>
+        <p>เฉพาะพนักงานที่ลงทะเบียนเท่านั้น</p>
+      </div>
+      
+      <div class="card-body">
+        <form name="myform" onsubmit="return false;">
+          <div class="input-group">
+            <label for="uname">รหัสพนักงาน</label>
+            <div class="input-icon">
+              <i class="fas fa-user"></i>
+            </div>
+            <input type="text" name="uname" id="uname" class="input-field" placeholder="กรุณากรอกรหัสพนักงาน" autocomplete="username">
+          </div>
+          
+          <div class="input-group">
+            <label for="pass">วันที่เริ่มงาน</label>
+            <div class="input-icon">
+              <i class="fas fa-calendar-alt"></i>
+            </div>
+            <input type="password" name="pass" id="pass" class="input-field" placeholder="กรุณากรอกวันที่เริ่มงาน (รูปแบบ: DDMMYYYY)" autocomplete="current-password">
+          </div>
+          
+          <div id="msg" class="message"></div>
+          
+          <button type="button" class="login-button" onclick="login()">
+            <i class="fas fa-sign-in-alt"></i>
+            เข้าสู่ระบบ
+          </button>
+          
+          <div class="forgot-link">
+            <a href="#" onclick="alert('กรุณาติดต่อฝ่ายทรัพยากรบุคคล');">ลืมรหัสผ่าน?</a>
+          </div>
+        </form>
+      </div>
+      
+      <div class="card-footer">
+        <p><i class="fas fa-shield-alt"></i> ระบบรักษาความปลอดภัยระดับสูง <i class="fas fa-shield-alt"></i></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzAijcj7vNQID_anRwaSsSi_A3RRyWjTeCadJ-LG9Lx0ktJ48YLKraOamTuFDheO9DvTg/exec";
+    const DASHBOARD_URL = "Dashboard_IT.html";
+
+    // เพิ่มฟังก์ชันสำหรับการกด Enter
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('pass').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          login();
+        }
+      });
+    });
+
+    function login() {
+      const user = document.forms["myform"]["uname"].value.trim();
+      const pass = document.forms["myform"]["pass"].value.trim();
+      const msgElement = document.getElementById("msg");
+
+      // Reset message
+      msgElement.className = "message";
+      msgElement.textContent = "";
+      msgElement.style.display = "none";
+
+      // Validation
+      if(user === "" || pass === "") {
+        msgElement.className = "message error";
+        msgElement.textContent = "กรุณากรอกข้อมูลให้ครบทุกช่อง";
+        msgElement.style.display = "block";
+        
+        // เพิ่ม effect การสั่นให้กับช่องที่ว่าง
+        if(user === "") {
+          document.getElementById('uname').classList.add('pulse-animation');
+          setTimeout(() => document.getElementById('uname').classList.remove('pulse-animation'), 1500);
+        }
+        if(pass === "") {
+          document.getElementById('pass').classList.add('pulse-animation');
+          setTimeout(() => document.getElementById('pass').classList.remove('pulse-animation'), 1500);
+        }
+        return;
+      }
+
+      // แสดงสถานะกำลังโหลด
+      msgElement.className = "message loading";
+      msgElement.innerHTML = "<i class='fas fa-spinner fa-spin'></i> กำลังตรวจสอบข้อมูล กรุณารอสักครู่...";
+      msgElement.style.display = "block";
+
+      // ปุ่มล็อกอินให้แสดงสถานะโหลด
+      const loginBtn = document.querySelector('.login-button');
+      const originalBtnText = loginBtn.innerHTML;
+      loginBtn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> กำลังตรวจสอบ...";
+      loginBtn.disabled = true;
+
+      // ส่งข้อมูลไปยัง API
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        body: new URLSearchParams({
+          "uname": user,
+          "pass": pass,
+          "action": "login"
+        })
+      })
+      .then(res => res.text())
+      .then(txt => {
+        console.log("Raw response:", txt);
+        let data;
+        try {
+          data = JSON.parse(txt);
+        } catch(e) {
+          console.error("ไม่ใช่ JSON ที่ถูกต้อง:", e);
+          msgElement.className = "message error";
+          msgElement.textContent = "การตอบกลับจากเซิร์ฟเวอร์ไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง";
+          msgElement.style.display = "block";
+          loginBtn.innerHTML = originalBtnText;
+          loginBtn.disabled = false;
+          return;
+        }
+        console.log("Login API response:", data);
+
+        if(data.status === "success" && data.userStatus === "Online") {
+          msgElement.className = "message success";
+          msgElement.innerHTML = "<i class='fas fa-check-circle'></i> ล็อกอินสำเร็จ! กำลังนำท่านเข้าสู่ระบบ...";
+          msgElement.style.display = "block";
+          
+          // บันทึกข้อมูลใน localStorage
+          localStorage.setItem("username", user);
+          localStorage.setItem("authToken", user);
+          localStorage.setItem("expireTime", Date.now() + 1000*60*30); // 30 นาที
+          
+          // หน่วงเวลาเพื่อแสดงข้อความสำเร็จก่อนเปลี่ยนหน้า
+          setTimeout(() => {
+            window.open(DASHBOARD_URL, "_self");
+          }, 1500);
+        } else {
+          msgElement.className = "message error";
+          msgElement.innerHTML = "<i class='fas fa-exclamation-circle'></i> ชื่อผู้ใช้ หรือรหัสผ่านไม่ถูกต้อง";
+          msgElement.style.display = "block";
+          loginBtn.innerHTML = originalBtnText;
+          loginBtn.disabled = false;
+          
+          // เพิ่ม effect การสั่นให้กับช่อง input
+          document.getElementById('uname').classList.add('pulse-animation');
+          document.getElementById('pass').classList.add('pulse-animation');
+          setTimeout(() => {
+            document.getElementById('uname').classList.remove('pulse-animation');
+            document.getElementById('pass').classList.remove('pulse-animation');
+          }, 1500);
+        }
+      })
+      .catch(err => {
+        console.error("Login API error:", err);
+        msgElement.className = "message error";
+        msgElement.innerHTML = "<i class='fas fa-exclamation-triangle'></i> เกิดข้อผิดพลาดในการเชื่อมต่อ กรุณาลองใหม่";
+        msgElement.style.display = "block";
+        loginBtn.innerHTML = originalBtnText;
+        loginBtn.disabled = false;
+      });
+    }
+  </script>
+</body>
+</html>
